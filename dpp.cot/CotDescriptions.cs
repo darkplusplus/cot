@@ -2228,7 +2228,7 @@ namespace dpp.cot
             {
                 t = t.Remove(2, 1).Insert(2, ".");
             }
-            if (t.StartsWith("b-g-"))
+            if (t.StartsWith("b-g-") || t.StartsWith("b-r-"))
             {
                 t = t.Remove(4, 1).Insert(4, ".");
             }

@@ -42,14 +42,14 @@ namespace dpp.cot
 {
     public static class CotPredicates
     {
-        <# 
+<# 
         foreach(var predicate in predicates)
-        {
-        #>
+{
+#>
         public const string <#= predicate.Key #> = "<#= predicate.Value #>";
-        <#
-        }
-        #>
+<#
+}
+#>
         
         // types not in CoTtypes.xml
         public const string t_ping = "t-x-c-t";
