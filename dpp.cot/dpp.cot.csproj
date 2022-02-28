@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="CotDescriptions.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CotDescriptions.cs</LastGenOutput>
+    </None>
+    <None Update="CotPredicates.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CotPredicates.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="CotDescriptions.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CotDescriptions.tt</DependentUpon>
+    </Compile>
+    <Compile Update="CotPredicates.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CotPredicates.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+</Project>

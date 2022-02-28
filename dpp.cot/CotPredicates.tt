@@ -1,0 +1,58 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Xml" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#@ import namespace="System.Xml.XPath" #>
+<#@ output extension=".cs" #>
+<#
+var f = this.Host.ResolvePath("CoTtypes.xml");
+var doc = new System.Xml.XPath.XPathDocument(f);
+var nav = doc.CreateNavigator();
+var nodes = nav.Select("/types/is");
+
+var predicates = new Dictionary<string, string>();
+
+var reservedWords = new List<string>(){ "true", "false" };
+
+while(nodes.MoveNext())
+{
+    var what = nodes.Current.SelectSingleNode("@what").Value;
+    var match = nodes.Current.SelectSingleNode("@match").Value;
+
+    // cleanup dirty characters
+    what = what.Replace(".", "_");
+    what = what.Replace("-", "_");
+    what = what.Replace("+", "_");
+
+    if (reservedWords.Contains(what)) {continue; };
+    predicates[what] = match;
+}
+#>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+
+namespace dpp.cot
+{
+    public static class CotPredicates
+    {
+        <# 
+        foreach(var predicate in predicates)
+        {
+        #>
+        public const string <#= predicate.Key #> = "<#= predicate.Value #>";
+        <#
+        }
+        #>
+        
+        // types not in CoTtypes.xml
+        public const string t_ping = "t-x-c-t";
+        public const string t_pong = "t-x-c-t-r";
+    }
+}

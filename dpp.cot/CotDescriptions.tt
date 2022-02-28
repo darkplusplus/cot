@@ -1,0 +1,57 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Xml" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#@ import namespace="System.Xml.XPath" #>
+<#@ output extension=".cs" #>
+<#
+var f = this.Host.ResolvePath("CoTtypes.xml");
+var doc = new System.Xml.XPath.XPathDocument(f);
+var nav = doc.CreateNavigator();
+var nodes = nav.Select("/types/cot");
+#>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+
+namespace dpp.cot
+{
+    public static class CotDescriptions
+    {
+        private static readonly Dictionary<string, string> CotDescriptionsMap = new Dictionary<string, string>
+        {
+<#
+while(nodes.MoveNext())
+{
+    var cot = nodes.Current.SelectSingleNode("@cot").Value;
+    var desc = nodes.Current.SelectSingleNode("@desc").Value;
+#>
+            { "<#= cot #>", "<#= desc #>"},
+<#
+}
+#>
+
+        };
+
+        public static string GetDescription(this Event e)
+        {
+            var t = e.Type;
+            if (t.StartsWith("a-"))
+            {
+                t = t.Remove(2, 1).Insert(2, ".");
+            }
+            if (t.StartsWith("b-g-"))
+            {
+                t = t.Remove(4, 1).Insert(4, ".");
+            }
+
+            return CotDescriptionsMap.TryGetValue(t, out var value) ? value : "Unknown";
+        }
+    }
+}
