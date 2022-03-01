@@ -1,0 +1,46 @@
+name: release
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+        
+    - name: Restore dependencies
+      run: dotnet restore
+      
+    - name: Build
+      run: dotnet build --no-restore --version-suffix="$GITHUB_REF.$GITHUB_RUN_NUMBER"
+      
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+      
+    - name: Publish
+      run: dotnet publish --no-build --version-suffix
+
+    - name: Pack
+      run: dotnet pack --no-build --version-suffix
+  
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: dpp.cot
+        path: dpp.cot/bin/*.nupkg
+
+    - name: Publish To Nuget
+      run: dotnet nuget push dpp.cot/bin/Release/*.nupkg -k $NUGET_AUTH_TOKEN -s https://api.nuget.org/v3/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{ secrets.NUGET_SECRET_DPP_COT }}
