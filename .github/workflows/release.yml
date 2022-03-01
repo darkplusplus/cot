@@ -23,22 +23,19 @@ jobs:
       run: dotnet restore
       
     - name: Build
-      run: dotnet build --no-restore --version-suffix="$GITHUB_REF.$GITHUB_RUN_NUMBER"
-      
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet build -c Release --no-restore --version-suffix="$GITHUB_REF_NAME.$GITHUB_RUN_NUMBER"
       
     - name: Publish
-      run: dotnet publish --no-build --version-suffix
+      run: dotnet publish -c Release --no-build --version-suffix
 
     - name: Pack
-      run: dotnet pack --no-build --version-suffix
+      run: dotnet pack -c Release --no-build --version-suffix
   
     - name: Upload Artifacts
       uses: actions/upload-artifact@v2
       with:
         name: dpp.cot
-        path: dpp.cot/bin/*.nupkg
+        path: dpp.cot/bin/*/*.nupkg
 
     - name: Publish To Nuget
       run: dotnet nuget push dpp.cot/bin/Release/*.nupkg -k $NUGET_AUTH_TOKEN -s https://api.nuget.org/v3/index.json
