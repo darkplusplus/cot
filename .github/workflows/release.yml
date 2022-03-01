@@ -26,10 +26,10 @@ jobs:
       run: dotnet build -c Release --no-restore --version-suffix="$GITHUB_REF_NAME.$GITHUB_RUN_NUMBER"
       
     - name: Publish
-      run: dotnet publish -c Release --no-build --version-suffix
+      run: dotnet publish -c Release --no-build --version-suffix="$GITHUB_REF_NAME.$GITHUB_RUN_NUMBER"
 
     - name: Pack
-      run: dotnet pack -c Release --no-build --version-suffix
+      run: dotnet pack -c Release --no-build --version-suffix="$GITHUB_REF_NAME.$GITHUB_RUN_NUMBER"
   
     - name: Upload Artifacts
       uses: actions/upload-artifact@v2
