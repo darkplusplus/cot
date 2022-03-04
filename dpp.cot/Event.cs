@@ -94,7 +94,7 @@ namespace dpp.cot
 		public static Event Pong()
 		{
             var e = new Event{Type = "t-x-c-t-r"};
-
+			
             return e;
 		}
 
@@ -107,26 +107,7 @@ namespace dpp.cot
 
 		public static Event Parse(byte[] payload, int offset, int length)
         {
-			// messages are in the form <magic><version><magic><data>
-
-			const byte magic = 0xbf;
-			const byte v1 = 0x00; // UTF-8 encoded xml
-			const byte v2 = 0x01; // Protobuf
-
-			if (payload.Length >= 3 && payload[0] == magic && payload[0] == payload[2])
-            {
-				if (payload[1] == v1)
-                {
-                    return Parse(Encoding.UTF8.GetString((byte[])payload.Skip(3)));
-                }
-				if (payload[1] == v2)
-                {
-					throw new NotImplementedException("No protobuf support");
-                }
-            }
-
-			// no magic preamble so assume it's just a uft8 string
-			return Parse(Encoding.UTF8.GetString(payload));
+			return Parse(Encoding.UTF8.GetString(payload, offset, length));
 		}
 
 		public String ToXmlString()
