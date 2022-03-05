@@ -88,14 +88,19 @@ namespace dpp.cot
 
 		public Event()
         {
-			this.Point = new Point();
-        }
+			Point = new Point();
+			Time = DateTime.Now;
+			Start = DateTime.Now;
+			Stale = DateTime.Now.AddMinutes(5);
+		}
 
-		public static Event Pong()
+		public static Event Pong(Event? ping)
 		{
-            var e = new Event{Type = "t-x-c-t-r"};
-			
-            return e;
+            var e = ping ?? new Event();
+			e.Uid ??= Guid.NewGuid().ToString();
+			e.Type = "t-x-c-t-r";
+
+			return e;
 		}
 
 		public static Event Parse(string payload)
