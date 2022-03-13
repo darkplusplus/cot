@@ -58,7 +58,7 @@ namespace dpp.cot
                         }
 
                     default:
-                        throw new NotImplementedException($"Unknown protocol version. Version={data[1].ToString("X")}");
+                        throw new NotImplementedException($"Unknown protocol version. Version={data[1]:X}");
                 }
             }
 

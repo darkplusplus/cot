@@ -39,6 +39,16 @@ namespace dpp.cot.Tests
             Assert.Equal(new System.DateTime(2005, 4, 5, 11, 43, 38, 70, System.DateTimeKind.Utc), evt.Time);
         }
 
+        [Fact]
+        public void XmlDoesntContainNamespaces()
+        {
+            var corpus = Helpers.SimplePayload;
+            var evt = cot.Event.Parse(corpus);
+            var xml = evt.ToXmlString();
+
+            Assert.DoesNotContain("xmlns", xml);
+        }
+
         [Theory]
         [InlineData(Helpers.SimplePayload, 30.0090027, -85.9578735)]
         [InlineData(Helpers.EudPayload, -0.00123456789012345, -0.00123456789012345)]

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -117,8 +118,8 @@ namespace dpp.cot
 
 		public String ToXmlString()
 		{
-            // empty namespaces to force serializer to omit them
-            var ns = new XmlSerializerNamespaces(new[] { XmlQualifiedName.Empty });
+			// empty namespaces to force serializer to omit them
+			var ns = new XmlSerializerNamespaces(new[] { XmlQualifiedName.Empty });
 
 			var settings = new XmlWriterSettings()
 			{
@@ -137,9 +138,10 @@ namespace dpp.cot
             var encoding = new UTF8Encoding();
             var result = encoding.GetString(ms.ToArray());
 
-            // fix BOM and self closing tags quirk 
+            // fix BOM, self closing tags quirk, and namespace from default values
             result = result.Replace("\ufeff", "");
             result = result.Replace("<detail />", "<detail></detail>");
+			result = Regex.Replace(result, @"(xmlns:)?p3(:nil)?.+//", "");
 
             return result;
         }
