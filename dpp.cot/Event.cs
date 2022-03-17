@@ -141,9 +141,9 @@ namespace dpp.cot
             // fix BOM, self closing tags quirk, and namespace from default values
             result = result.Replace("\ufeff", "");
             result = result.Replace("<detail />", "<detail></detail>");
-			result = Regex.Replace(result, @"(xmlns:)?p3(:nil)?.+//", "");
+			result = Regex.Replace(result, @"(xmlns:)?p3(:nil)?="".+?\""", "");
 
-            return result;
+			return result;
         }
 	}
 }

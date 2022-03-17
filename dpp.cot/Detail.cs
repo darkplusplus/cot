@@ -29,8 +29,8 @@ namespace dpp.cot
         public Group Group { get; set; }
 
         [ProtoMember(4)]
-        [XmlElement(ElementName = "precisionlocation ", IsNullable = true)]
-        public PrecisionLocation precisionLocation { get; set; }
+        [XmlElement(ElementName = @"precisionlocation", IsNullable = true)]
+        public PrecisionLocation PrecisionLocation { get; set; }
 
         [ProtoMember(5, Name = @"status")]
         [XmlElement(ElementName = "status", IsNullable = true)]

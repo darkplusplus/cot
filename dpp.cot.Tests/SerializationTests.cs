@@ -47,6 +47,48 @@ namespace dpp.cot.Tests
             var xml = evt.ToXmlString();
 
             Assert.DoesNotContain("xmlns", xml);
+            Assert.DoesNotContain("w3.org", xml);
+        }
+
+        [Fact]
+        public void SimplePayloadIntegrity()
+        {
+            var corpus = Helpers.SimplePayload;
+            var evt = cot.Event.Parse(corpus);
+
+            Assert.Equal("J-01334", evt.Uid);
+            Assert.Equal("a-h-A-M-F-U-M", evt.Type);
+            Assert.Equal(30.0090027, evt.Point.Lat);
+            Assert.Equal(-85.9578735, evt.Point.Lon);
+            Assert.Equal(45.3, evt.Point.Ce);
+            Assert.Equal(-42.6, evt.Point.Hae);
+        }
+
+        [Fact]
+        public void EudPayloadIntegrity()
+        {
+            var corpus = Helpers.EudPayload;
+            var evt = Event.Parse(corpus);
+
+            Assert.Equal("ANDROID-ASDFASDFASDF", evt.Uid);
+            Assert.Equal("a-f-G-U-C", evt.Type);
+            Assert.Equal("h-e", evt.How);
+            Assert.Equal(-0.00123456789012345, evt.Point.Lat);
+            Assert.Equal(-0.00123456789012345, evt.Point.Lon);
+            Assert.Equal(9999999.0, evt.Point.Ce);
+            Assert.Equal(9999999.0, evt.Point.Hae);
+            Assert.Equal(9999999.0, evt.Point.Le);
+            Assert.Equal("SOMSANG FOOBAR", evt.Detail.Takv.Device);
+            Assert.Equal("ATAK-CIV", evt.Detail.Takv.Platform);
+            Assert.Equal("25", evt.Detail.Takv.Os);
+            Assert.Equal("1.23.4-56789.56789-CIV", evt.Detail.Takv.Version);
+            Assert.Equal("192.168.1.2:4242:tcp", evt.Detail.Contact.Endpoint);
+            Assert.Equal("SUPERMAN", evt.Detail.Contact.Callsign);
+            Assert.Equal("USER", evt.Detail.PrecisionLocation.Geopointsrc);
+            Assert.Equal("???", evt.Detail.PrecisionLocation.Altsrc);
+            Assert.Equal("Blue", evt.Detail.Group.Name);
+            Assert.Equal("Team Member", evt.Detail.Group.Role);
+            Assert.Equal((uint)45, evt.Detail.Status.Battery);
         }
 
         [Theory]
