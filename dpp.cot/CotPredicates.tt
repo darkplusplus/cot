@@ -54,5 +54,6 @@ namespace dpp.cot
         // types not in CoTtypes.xml
         public const string t_ping = "t-x-c-t";
         public const string t_pong = "t-x-c-t-r";
+        public const string t_remote_disconnect = "t-x-d-d";
     }
 }
