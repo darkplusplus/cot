@@ -29,15 +29,14 @@ jobs:
       run: dotnet test -c Release --no-build --verbosity normal
 
     - name: Pack
-      run: dotnet pack -c Release --no-build
+      run: dotnet pack -c Release --no-build -o ./artifacts
   
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: dpp.cot
-        path: dpp.cot/bin/Release/*.nupkg
+        path: ./artifacts/*.nupkg
+        if-no-files-found: error
 
     - name: Publish To Nuget
-      run: dotnet nuget push dpp.cot/bin/Release/*.nupkg -k $NUGET_AUTH_TOKEN -s https://api.nuget.org/v3/index.json
-      env:
-        NUGET_AUTH_TOKEN: ${{ secrets.NUGET_SECRET_DPP_COT }}
+      run: dotnet nuget push "./artifacts/*.nupkg" --api-key "${{ secrets.NUGET_SECRET_DPP_COT }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
