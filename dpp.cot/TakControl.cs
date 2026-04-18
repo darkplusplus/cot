@@ -1,5 +1,4 @@
 ﻿using ProtoBuf;
-using System.ComponentModel;
 
 namespace dpp.cot
 {
@@ -15,9 +14,5 @@ namespace dpp.cot
 
         [ProtoMember(2)]
         public uint maxProtoVersion { get; set; }
-
-        [ProtoMember(3)]
-        [DefaultValue("")]
-        public string contactUid { get; set; } = "";
     }
 }

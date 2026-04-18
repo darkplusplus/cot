@@ -1,5 +1,6 @@
 ﻿using ProtoBuf;
 using System.ComponentModel;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace dpp.cot
@@ -30,5 +31,8 @@ namespace dpp.cot
         [DefaultValue("")]
         [XmlAttribute(AttributeName = "version")]
         public string Version { get; set; } = "";
+
+        [XmlAnyAttribute]
+        public XmlAttribute[] AdditionalAttributes { get; set; } = System.Array.Empty<XmlAttribute>();
     }
 }
