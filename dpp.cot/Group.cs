@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace dpp.cot
@@ -25,6 +26,9 @@ namespace dpp.cot
         [DefaultValue("")]
         [XmlAttribute(AttributeName = @"role")]
         public string Role { get; set; } = "";
+
+        [XmlAnyAttribute]
+        public XmlAttribute[] AdditionalAttributes { get; set; } = System.Array.Empty<XmlAttribute>();
 
     }
 }

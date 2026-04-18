@@ -1,0 +1,21 @@
+site_name: dpp.cot
+site_description: Documentation for the dpp.cot Cursor-on-Target library
+repo_url: https://github.com/darkplusplus/cot
+theme:
+  name: mkdocs
+nav:
+  - Home: index.md
+  - Scope: scope.md
+  - Source Policy: source-policy.md
+  - Source Validation: source-validation.md
+  - Type Inference: type-inference.md
+  - Fixture Provenance: fixture-provenance.md
+  - Compatibility Policy: compatibility-policy.md
+  - Protocols:
+    - CoT XML Event: protocols/cot-xml.md
+    - TAK Protobuf Payload: protocols/tak-protobuf.md
+    - TAK Streaming Envelope: protocols/tak-streaming.md
+  - Interoperability Notes: interoperability.md
+  - Library Design: library-design.md
+  - Testing: testing.md
+  - Sources: sources.md

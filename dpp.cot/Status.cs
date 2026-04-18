@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace dpp.cot
@@ -18,6 +19,9 @@ namespace dpp.cot
         [ProtoMember(1, Name = @"battery")]
         [XmlAttribute(AttributeName = "battery")]
         public uint Battery { get; set; }
+
+        [XmlAnyAttribute]
+        public XmlAttribute[] AdditionalAttributes { get; set; } = System.Array.Empty<XmlAttribute>();
 
     }
 }
